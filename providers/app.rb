@@ -17,6 +17,7 @@ action :create do
     :ssl_certificate_path => new_resource.ssl_certificate_path,
     :ssl_certificate_key_path => new_resource.ssl_certificate_key_path,
     :include_forwarding_headers => new_resource.include_forwarding_headers,
+    :htpasswd => new_resource.htpasswd,
   }
 
   directory common[:app_root] do
@@ -51,6 +52,12 @@ action :create do
     source "unicorn-init.erb"
     cookbook "rails_nginx_unicorn"
     variables common
+  end
+
+  file "#{common[:app_root]}/.htpasswd" do
+    mode 0644
+    content "#{common[:htpasswd]}\n"
+    not_if { common[:htpasswd].nil? }
   end
 
   service common[:name] do
