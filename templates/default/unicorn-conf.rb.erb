@@ -3,7 +3,7 @@ pid "<%= @app_root %>/shared/pids/unicorn.pid"
 stderr_path "<%= @app_root %>/shared/log/unicorn.log"
 stdout_path "<%= @app_root %>/shared/log/unicorn.log"
 
-listen "/tmp/sockets/unicorn.<%= @name %>.sock", :backlog => 64
+listen "/tmp/unicorn.<%= @name %>.sock", :backlog => 64
 worker_processes 2
 timeout 30
 

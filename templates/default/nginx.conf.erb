@@ -1,5 +1,5 @@
 upstream <%= @name %> {
-  server unix:/tmp/sockets/unicorn.<%= @name %>.sock fail_timeout=0;
+  server unix:/tmp/unicorn.<%= @name %>.sock fail_timeout=0;
 }
 
 <% if @http_port %>
@@ -63,6 +63,21 @@ server {
       root <%= @asset_root %>;
     }
     <% end %>
+
+    <% if @htpasswd %>
+      <% if @ip_whitelist %>
+        satisfy any;
+
+        <% @ip_whitelist.each do |ip| %>
+          allow <%= ip %>;
+        <% end %>
+
+        deny all;
+      <% end %>
+
+      auth_basic "Restricted";
+      auth_basic_user_file <%= @app_root %>/.htpasswd;
+    <% end %>
   <% end %>
 }
 
@@ -124,6 +139,20 @@ server {
   location ^~ <%= @asset_location %> {
     root <%= @asset_root %>;
   }
+  <% end %>
+
+  <% if @htpasswd %>
+    <% if @ip_whitelist %>
+      satisfy any;
+
+      <% @ip_whitelist.each do |ip| %>
+        allow <%= ip %>;
+      <% end %>
+
+      deny all;
+    <% end %>
+    auth_basic "Restricted";
+    auth_basic_user_file <%= @app_root %>/.htpasswd;
   <% end %>
 
 }
