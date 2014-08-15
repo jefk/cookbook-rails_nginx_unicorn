@@ -21,3 +21,4 @@ attribute :ssl_certificate_key_path, :kind_of => String, :default => '/usr/local
 attribute :ssl_certificate_key_path, :kind_of => String, :default => '/usr/local/nginx/conf/cert.key'
 attribute :include_forwarding_headers, :default => true
 attribute :htpasswd, :kind_of => String, :required => false
+attribute :ip_whitelist, :kind_of => Array, :required => false
