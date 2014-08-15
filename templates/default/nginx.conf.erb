@@ -63,6 +63,11 @@ server {
       root <%= @asset_root %>;
     }
     <% end %>
+
+    <% if @htpasswd %>
+      auth_basic "Restricted";
+      auth_basic_user_file <%= @app_root %>/.htpasswd;
+    <% end %>
   <% end %>
 }
 
@@ -124,6 +129,11 @@ server {
   location ^~ <%= @asset_location %> {
     root <%= @asset_root %>;
   }
+  <% end %>
+
+  <% if @htpasswd %>
+    auth_basic "Restricted";
+    auth_basic_user_file <%= @app_root %>/.htpasswd;
   <% end %>
 
 }
