@@ -65,6 +65,16 @@ server {
     <% end %>
 
     <% if @htpasswd %>
+      <% if @ip_whitelist %>
+        satisfy any;
+
+        <% @ip_whitelist.each do |ip| %>
+          allow <%= ip %>;
+        <% end %>
+
+        deny all;
+      <% end %>
+
       auth_basic "Restricted";
       auth_basic_user_file <%= @app_root %>/.htpasswd;
     <% end %>
@@ -132,6 +142,15 @@ server {
   <% end %>
 
   <% if @htpasswd %>
+    <% if @ip_whitelist %>
+      satisfy any;
+
+      <% @ip_whitelist.each do |ip| %>
+        allow <%= ip %>;
+      <% end %>
+
+      deny all;
+    <% end %>
     auth_basic "Restricted";
     auth_basic_user_file <%= @app_root %>/.htpasswd;
   <% end %>

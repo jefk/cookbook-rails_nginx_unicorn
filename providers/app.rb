@@ -18,6 +18,7 @@ action :create do
     :ssl_certificate_key_path => new_resource.ssl_certificate_key_path,
     :include_forwarding_headers => new_resource.include_forwarding_headers,
     :htpasswd => new_resource.htpasswd,
+    :ip_whitelist => new_resource.ip_whitelist,
   }
 
   directory common[:app_root] do
